@@ -8,14 +8,14 @@
 "
 "=============================================================================
 
-function! unite#sources#outline#defaults#pcet#outline_info() abort
+function! unite#sources#outline#pcet#outline_info() abort
   return s:outline_info
 endfunction
 
 let s:Util = unite#sources#outline#import('Util')
 
 "-----------------------------------------------------------------------------
-" Outline Info
+" Tags
 
 let s:tags = {
             \ 'protocol_list':1,
@@ -38,12 +38,18 @@ let s:tags = {
             \ 'convert_unit':5,
             \ }
 
+let s:heading_pattern = '^\s*<\s*\(' . join(keys(s:tags), '\|') . '\)\>\(\|[^>]*[^/]\)>'
+
+"-----------------------------------------------------------------------------
+" Outline Info
+
 let s:outline_info = {
-      \ 'heading'  : '^\s*<\s*\%(' . join(keys(s.tags), '\|') . '\)\>\%(\|[^>]*[^/]\)>',
+      \ 'heading'  : s:heading_pattern,
       \}
 
 function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
     "let matches = matchlist(
+    echom  a:heading_line
     let heading = {
                 \ 'word' : a:heading_line,
                 \ 'level': 1,
