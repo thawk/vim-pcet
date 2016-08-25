@@ -19,9 +19,9 @@ let s:Util = unite#sources#outline#import('Util')
 
 let s:tags = {
             \ 'protocol_suite':2,
-            \ 'fields':3,
-            \ 'typedefs':3,
-            \ 'components':3,
+            \ 'fields':4,
+            \ 'typedefs':4,
+            \ 'components':4,
             \ 'protocol':3,
             \ 'transport_message':4,
             \ 'header':5,
@@ -56,12 +56,31 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
     let matches = matchlist(a:heading_line, s:heading_pattern)
     let tag = matches[1]
     let attrs = matches[2]
-    let m = matchlist(attrs, '\<\%(name\|ver\)\s*=\s*"\([^"]\+\)"')
-    if len(m) > 0
-        let heading.word = tag . ' ' . m[1]
+
+    if tag == "converter_suite"
+        let input = substitute(attrs, '^.*\<input\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let output = substitute(attrs, '^.*\<output\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let heading.word = input . ' => ' . output
+    elseif tag == "converter"
+        let input = substitute(attrs, '^.*\<inputver\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let output = substitute(attrs, '^.*\<outputver\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let heading.word = input . ' => ' . output
+    elseif tag == 'protocol'
+        let ver = substitute(attrs, '^.*\<ver\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let heading.word = "VERSION " . ver
     else
-        echom attrs . " not match"
-        let heading.word = tag
+        let name = matchlist(attrs, '\<name\s*=\s*"\([^"]\+\)"')
+        let id = matchlist(attrs, '\<id\s*=\s*"\([^"]\+\)"')
+
+        if len(name) > 0
+            if len(id) > 0
+                let heading.word = id[1] . " " . name[1]
+            else
+                let heading.word = name[1]
+            endif
+        else
+            let heading.word = toupper(tag)
+        endif
     endif
 
     let heading.level = s:tags[matches[1]]
