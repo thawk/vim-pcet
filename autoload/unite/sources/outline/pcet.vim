@@ -18,7 +18,6 @@ let s:Util = unite#sources#outline#import('Util')
 " Tags
 
 let s:tags = {
-            \ 'protocol_list':1,
             \ 'protocol_suite':2,
             \ 'fields':3,
             \ 'typedefs':3,
@@ -26,7 +25,7 @@ let s:tags = {
             \ 'protocol':3,
             \ 'transport_message':4,
             \ 'header':5,
-            \ 'triler':5,
+            \ 'trailer':5,
             \ 'message':4,
             \ 'component':6,
             \ 'converter_list':1,
@@ -39,6 +38,7 @@ let s:tags = {
             \ }
 
 let s:heading_pattern = '^\s*<\s*\(' . join(keys(s:tags), '\|') . '\)\>\(\|[^>]*[^/]\)>'
+" let s:heading_pattern = '^\s*<\s*\(' . join(keys(s:tags), '\|') . '\)\>'
 
 "-----------------------------------------------------------------------------
 " Outline Info
@@ -48,12 +48,23 @@ let s:outline_info = {
       \}
 
 function! s:outline_info.create_heading(which, heading_line, matched_line, context) abort
-    "let matches = matchlist(
-    echom  a:heading_line
     let heading = {
                 \ 'word' : a:heading_line,
-                \ 'level': 1,
+                \ 'level': 0,
                 \ 'type' : 'generic',
                 \ }
+    let matches = matchlist(a:heading_line, s:heading_pattern)
+    let tag = matches[1]
+    let attrs = matches[2]
+    let m = matchlist(attrs, '\<\%(name\|ver\)\s*=\s*"\([^"]\+\)"')
+    if len(m) > 0
+        let heading.word = tag . ' ' . m[1]
+    else
+        echom attrs . " not match"
+        let heading.word = tag
+    endif
+
+    let heading.level = s:tags[matches[1]]
+
     return heading
 endfunction
