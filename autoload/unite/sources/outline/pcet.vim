@@ -68,16 +68,25 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
     elseif tag == 'protocol'
         let ver = substitute(attrs, '^.*\<ver\s*=\s*"\([^"]\+\)".*', '\1', '')
         let heading.word = "VERSION " . ver
-    else
+    elseif tag == 'message'
         let name = matchlist(attrs, '\<name\s*=\s*"\([^"]\+\)"')
         let id = matchlist(attrs, '\<id\s*=\s*"\([^"]\+\)"')
+        let msgtype = matchlist(attrs, '\<msgtype\s*=\s*"\([^"]\+\)"')
+
+        let heading.word = name[1]
+
+        if len(id) > 0
+            let heading.word = id[1] . " " . heading.word
+        endif
+
+        if len(msgtype) > 0
+            let heading.word = msgtype[1] . " " . heading.word
+        endif
+    else
+        let name = matchlist(attrs, '\<name\s*=\s*"\([^"]\+\)"')
 
         if len(name) > 0
-            if len(id) > 0
-                let heading.word = id[1] . " " . name[1]
-            else
-                let heading.word = name[1]
-            endif
+            let heading.word = name[1]
         else
             let heading.word = toupper(tag)
         endif

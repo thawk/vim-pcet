@@ -1,0 +1,25 @@
+== 用途
+
+用于为内部使用的 `pcet_*.xml` 模板文件提供语法高亮和 link:https://github.com/h1mesuke/unite-outline[unite-outline] 大纲支持。
+
+如果你不知道这是什么文件，那么你也不需要用到这个插件 :-P
+
+== 安装
+
+需要先安装 link:https://github.com/Shougo/unite.vim[unite.vim] 和 link:https://github.com/h1mesuke/unite-outline[unite-outline]。
+
+把文件放到vim目录下（*nix下一般是`~/.vim/`，Windows下一般是 `%USERPROFILE%\\vimfiles\\`）即可。
+
+建议选用一个插件管理器以简化管理。如
+
+.NeoBundle
+[source,vim]
+----
+NeoBundleLazy 'thawk/vim-pcet', {
+            \ 'on_source': ['unite-outline'],
+            \ }
+----
+
+== 使用
+
+打开pcet文件后，`:Unite outline`即可。
