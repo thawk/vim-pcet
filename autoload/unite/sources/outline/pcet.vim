@@ -65,6 +65,10 @@ function! s:outline_info.create_heading(which, heading_line, matched_line, conte
         let input = substitute(attrs, '^.*\<inputver\s*=\s*"\([^"]\+\)".*', '\1', '')
         let output = substitute(attrs, '^.*\<outputver\s*=\s*"\([^"]\+\)".*', '\1', '')
         let heading.word = input . ' => ' . output
+    elseif tag == "convert_unit"
+        let input = substitute(attrs, '^.*\<in_msg_id\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let output = substitute(attrs, '^.*\<out_msg_id\s*=\s*"\([^"]\+\)".*', '\1', '')
+        let heading.word = input . ' => ' . output
     elseif tag == 'protocol'
         let ver = substitute(attrs, '^.*\<ver\s*=\s*"\([^"]\+\)".*', '\1', '')
         let heading.word = "VERSION " . ver
