@@ -1,5 +1,5 @@
 "=============================================================================
-" File    : autoload/unite/sources/outline/pcet.vim
+" File    : autoload/unite/sources/outline/defaults/pcet.vim
 " Author  : thawk <thawk009@gmail.com>
 " Updated : 2016-08-23
 "
@@ -8,7 +8,7 @@
 "
 "=============================================================================
 
-function! unite#sources#outline#pcet#outline_info() abort
+function! unite#sources#outline#defaults#pcet#outline_info() abort
   return s:outline_info
 endfunction
 
