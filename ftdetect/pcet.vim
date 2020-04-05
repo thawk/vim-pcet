@@ -1,1 +1,1 @@
-au BufRead,BufNewFile pcet_*.xml set filetype=pcet
+au BufRead,BufNewFile pcet_*.xml* set filetype=pcet
