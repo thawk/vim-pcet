@@ -4,9 +4,9 @@
 --regex-pcet=/^[ \t]*<[ \t]*protocol[^>]+ver[ \t]*=[ \t]*"([^"]+)".*/. VERSION \1/s,protocol/
 --regex-pcet=/^[ \t]*<[ \t]*header.*/.   Header/s,header/
 --regex-pcet=/^[ \t]*<[ \t]*message[^>]+id[ \t]*=[ \t]*"([^"]+)"[^>]+msgtype[ \t]*=[ \t]*"([^"]+)"[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)".*/.   \2 : \1 \4/s,message/
---regex-pcet=/^[ \t]*<[ \t]*message[^>]+id[ \t]*=[ \t]*"([^"]+)[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)""[^>]+msgtype[ \t]*=[ \t]*"([^"]+)".*/.   \3 : \1 \2/s,message/
+--regex-pcet=/^[ \t]*<[ \t]*message[^>]+id[ \t]*=[ \t]*"([^"]+)"[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)"[^>]+msgtype[ \t]*=[ \t]*"([^"]+)".*/.   \3 : \1 \2/s,message/
 --regex-pcet=/^[ \t]*<[ \t]*template[^>]+id[ \t]*=[ \t]*"([^"]+)"[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)"[^>]+step_id[ \t]*=[ \t]*"([^"]+)".*/.   \3 : \1 \2/s,template/
 --regex-pcet=/^[ \t]*<[ \t]*converter_suite[^>]+input[ \t]*=[ \t]*"([^"]+)"[^>]+output[ \t]*=[ \t]*"([^"]+)".*/\1 > \2/s,converter_suite/
 --regex-pcet=/^[ \t]*<[ \t]*converter[^>]+inputvar[ \t]*=[ \t]*"([^"]+)"[^>]+outputvar[ \t]*=[ \t]*"([^"]+)".*/. \1 > \2/s,converter/
 --regex-pcet=/^[ \t]*<[ \t]*convert_unit[^>]+in_msg_id[ \t]*=[ \t]*"([^"]+)"[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)"[^>]+out_msg_id[ \t]*=[ \t]*"([^"]+)".*/.   \1 > \3 \2/s,convert_unit/
---regex-pcet=/^[ \t]*<[ \t]*convert_unit[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)"[^>]+in_msg_id[ \t]*=[ \t]*"([^"]+)"[^>]+out_msg_id[ \t]*=[ \t]*"([^"]+)".*/.   \1 > \3 \2/s,convert_unit/
+--regex-pcet=/^[ \t]*<[ \t]*convert_unit[^>]*[ \t]name[ \t]*=[ \t]*"([^"]+)"[^>]+in_msg_id[ \t]*=[ \t]*"([^"]+)"[^>]+out_msg_id[ \t]*=[ \t]*"([^"]+)".*/.   \2 > \3 \1/s,convert_unit/
